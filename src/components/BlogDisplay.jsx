@@ -23,6 +23,7 @@ const BlogDisplay = ({
                 setBlogs={setBlogs}
                 setNotification={setNotification}
                 blogFormVisible={blogFormVisible}
+                setBlogFormVisible={setBlogFormVisible}
             />
             <button onClick={() => setBlogFormVisible(!blogFormVisible)}>
                 {blogFormVisible ? 'cancel' : 'new blog'}

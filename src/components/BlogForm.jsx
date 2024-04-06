@@ -5,6 +5,7 @@ const BlogForm = ({
     setBlogs,
     setNotification,
     blogFormVisible,
+    setBlogFormVisible
 }) => { 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -24,6 +25,7 @@ const BlogForm = ({
         setBlogs(prevblogs => [...prevblogs, returnedBlog])
         setNotification({ message: `a new blog '${returnedBlog.title}' by '${returnedBlog.author}' added`, status: 'success' })
         setTimeout(() => { setNotification(null) }, 5000)
+        setBlogFormVisible(false)
         setTitle('')
         setAuthor('')
         setUrl('')
