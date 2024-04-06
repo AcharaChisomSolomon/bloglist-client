@@ -23,6 +23,7 @@ const BlogDisplay = ({
             likes: blog.likes + 1,
             user: userId,
         };
+        
         const returnedBlog = await blogService.update(blog.id, updatedBlog);
         returnedBlog.user = blogUser;
         setBlogs(blogs.map((b) => (b.id === blog.id ? returnedBlog : b)));
@@ -54,7 +55,7 @@ const BlogDisplay = ({
     blogs.sort((a, b) => b.likes - a.likes);
 
     return (
-      <div>        
+        <div>        
             <p>
                 {nameOfLoggedInUser} logged in
                 <button onClick={handleLogout}>logout</button>
@@ -72,17 +73,17 @@ const BlogDisplay = ({
             </button>
 
             <div>
-            {blogs.map((blog) => (
-                <Blog
-                    key={blog.id}
-                    blog={blog}
-                    handleLike={() => handleLike(blog)}
-                    handleBlogDelete={() => handleBlogDelete(blog)}
-                    nameOfLoggedInUser={nameOfLoggedInUser}
-                />
-            ))}
+                {blogs.map((blog) => (
+                    <Blog
+                        key={blog.id}
+                        blog={blog}
+                        handleLike={() => handleLike(blog)}
+                        handleBlogDelete={() => handleBlogDelete(blog)}
+                        nameOfLoggedInUser={nameOfLoggedInUser}
+                    />
+                ))}
             </div>
-      </div>
+        </div>
     );
 }
 
