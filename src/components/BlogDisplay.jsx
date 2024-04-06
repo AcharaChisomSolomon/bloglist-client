@@ -15,7 +15,6 @@ const BlogDisplay = ({
     
     const handleLike = async (blog) => {
         const userId = blog.user.id;
-        const blogUser = blog.user;
         delete blog.user;
 
         const updatedBlog = {
@@ -25,7 +24,6 @@ const BlogDisplay = ({
         };
         
         const returnedBlog = await blogService.update(blog.id, updatedBlog);
-        returnedBlog.user = blogUser;
         setBlogs(blogs.map((b) => (b.id === blog.id ? returnedBlog : b)));
         setNotification({ message: `You liked '${blog.title}' by '${blog.author}'`, status: 'success' });
         setTimeout(() => {
