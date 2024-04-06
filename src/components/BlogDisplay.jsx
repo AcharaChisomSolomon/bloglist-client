@@ -5,7 +5,7 @@ import blogService from '../services/blogs'
 
 const BlogDisplay = ({
     blogs,
-    name,
+    nameOfLoggedInUser,
     handleLogout,
     setBlogs,
     setNotification
@@ -13,15 +13,6 @@ const BlogDisplay = ({
     const [blogFormVisible, setBlogFormVisible] = useState(false);
     
     const handleLike = async (blog) => {
-        if (blog.user.name !== name) {
-            setNotification({ message: 'You can only like your own blogs', status: 'error' });
-            setTimeout(() => {
-                setNotification(null);
-            }, 5000);
-            console.log('You can only like your own blogs')
-            return;
-        }
-
         const userId = blog.user.id;
         const blogUser = blog.user;
         delete blog.user;
@@ -40,10 +31,31 @@ const BlogDisplay = ({
         }, 5000);
     }
 
+    const handleBlogDelete = async (blog) => { 
+        if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+            try {
+                await blogService.deleteBlog(blog.id);
+                setBlogs(blogs.filter((b) => b.id !== blog.id));
+                setNotification({ message: `Deleted '${blog.title}' by '${blog.author}'`, status: 'success' });
+                setTimeout(() => {
+                    setNotification(null);
+                }, 5000);
+            } catch (exception) {
+                setBlogs(blogs.filter((b) => b.id !== blog.id));
+                setNotification({ message: `'${blog.title}' by '${blog.author} already deleted'`, status: 'error' });
+                setTimeout(() => {
+                    setNotification(null);
+                }, 5000);
+            }
+        }
+    };
+
+    blogs.sort((a, b) => b.likes - a.likes);
+
     return (
       <div>        
             <p>
-                {name} logged in
+                {nameOfLoggedInUser} logged in
                 <button onClick={handleLogout}>logout</button>
             </p>
 
@@ -64,6 +76,8 @@ const BlogDisplay = ({
                     key={blog.id}
                     blog={blog}
                     handleLike={() => handleLike(blog)}
+                    handleBlogDelete={() => handleBlogDelete(blog)}
+                    nameOfLoggedInUser={nameOfLoggedInUser}
                 />
             ))}
             </div>

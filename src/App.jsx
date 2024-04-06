@@ -70,7 +70,7 @@ const App = () => {
       />}
       {user && <BlogDisplay
         blogs={blogs}
-        name={user.name}
+        nameOfLoggedInUser={user.name}
         handleLogout={handleLogout}
         setBlogs={setBlogs}
         setNotification={setNotification}
