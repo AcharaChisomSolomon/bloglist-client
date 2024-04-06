@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 /* eslint-disable react/prop-types */
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleLike }) => {
     const [visible, setVisible] = useState(false);
     const showWhenVisible = { display: visible ? '' : 'none' };
 
@@ -24,7 +24,7 @@ const Blog = ({ blog }) => {
                 <div>{blog.url}</div>
                 <div>
                     likes {blog.likes}
-                    <button>like</button>
+                    <button onClick={handleLike}>like</button>
                 </div>
                 <div>{blog.user.name}</div>
             </div>
