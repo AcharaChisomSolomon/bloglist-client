@@ -10,6 +10,7 @@ const BlogDisplay = ({
     setNotification
 }) => {
     const [blogFormVisible, setBlogFormVisible] = useState(false);
+    console.log('blogs', blogs)
 
     return (
       <div>        
@@ -26,12 +27,14 @@ const BlogDisplay = ({
                 setBlogFormVisible={setBlogFormVisible}
             />
             <button onClick={() => setBlogFormVisible(!blogFormVisible)}>
-                {blogFormVisible ? 'cancel' : 'new blog'}
+                {blogFormVisible ? 'cancel' : 'create new blog'}
             </button>
 
             <div>
             {blogs.map((blog) => (
-                <Blog key={blog.id} blog={blog} />
+                <Blog
+                    key={blog.id}
+                    blog={blog} />
             ))}
             </div>
       </div>

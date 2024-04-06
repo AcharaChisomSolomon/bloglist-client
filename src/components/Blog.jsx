@@ -1,8 +1,33 @@
+import { useState } from "react";
+
 /* eslint-disable react/prop-types */
-const Blog = ({ blog }) => { 
+const Blog = ({ blog }) => {
+    const [visible, setVisible] = useState(false);
+    const showWhenVisible = { display: visible ? '' : 'none' };
+
+    const blogStyle = {
+        paddingTop: 10,
+        paddingLeft: 2,
+        border: 'solid',
+        borderWidth: 1,
+        marginBottom: 5,
+        paddingBottom: 5
+    }
+
     return (
-        <div>
-            {blog.title} - {blog.author}
+        <div style={blogStyle}>
+            <div>
+                {blog.title} - {blog.author}
+                <button onClick={() => setVisible(!visible)}>{ visible ? 'hide' : 'view' }</button>
+            </div>
+            <div style={showWhenVisible}>
+                <div>{blog.url}</div>
+                <div>
+                    likes {blog.likes}
+                    <button>like</button>
+                </div>
+                <div>{blog.user.name}</div>
+            </div>
         </div>
     );
 };
