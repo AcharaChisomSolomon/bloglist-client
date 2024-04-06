@@ -20,18 +20,36 @@ const App = () => {
     }
     fetchBlogs()
   }, [user])
+
+
+  useEffect(() => { 
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      blogService.setToken(user.token)
+      setUser(user)
+    }
+  }, [])
   
 
   const handleLogin = async (event) => { 
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
       console.error('wrong credentials')
     }
+  }
+
+
+  const handleLogout = () => { 
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(null)
   }
 
 
@@ -44,7 +62,11 @@ const App = () => {
         handlePasswordChange={({ target }) => setPassword(target.value)}
         handleLogin={handleLogin}
       />}
-      {user && <BlogDisplay blogs={blogs} name={user.name} />}
+      {user && <BlogDisplay
+        blogs={blogs}
+        name={user.name}
+        handleLogout={handleLogout}
+      />}
     </div>
   )
 }
