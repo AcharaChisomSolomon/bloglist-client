@@ -1,14 +1,25 @@
 import Blog from "./Blog"
+import BlogForm from "./BlogForm";
 
-const BlogDisplay = ({ blogs, name, handleLogout }) => {
+const BlogDisplay = ({
+    blogs,
+    name,
+    handleLogout,
+    setBlogs,
+    setNotification
+}) => {
     return (
-      <div>
-            <h2>blogs</h2>
-            
+      <div>        
             <p>
                 {name} logged in
                 <button onClick={handleLogout}>logout</button>
             </p>
+
+            <h2>create new</h2>
+            <BlogForm
+                setBlogs={setBlogs}
+                setNotification={setNotification}
+            />
 
             <div>
             {blogs.map((blog) => (
