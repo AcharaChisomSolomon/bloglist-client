@@ -11,12 +11,13 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+    if (!user) return
     async function fetchBlogs() { 
       const blogs = await blogService.getAll()
       setBlogs(blogs)
     }
     fetchBlogs()
-  }, [])
+  }, [user])
   
   const handleLogin = async (event) => { 
     event.preventDefault()
@@ -32,7 +33,6 @@ const App = () => {
 
   return (
     <div>
-      <h2>{user ? 'blogs' : 'log in to application'}</h2>
       {!user && <LoginForm
         username={username}
         password={password}
