@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import Blog from "./Blog"
 import BlogForm from "./BlogForm";
 import blogService from '../services/blogs'
@@ -84,5 +85,13 @@ const BlogDisplay = ({
       </div>
     );
 }
+
+BlogDisplay.propTypes = {
+    blogs: PropTypes.array.isRequired,
+    nameOfLoggedInUser: PropTypes.string.isRequired,
+    handleLogout: PropTypes.func.isRequired,
+    setBlogs: PropTypes.func.isRequired,
+    setNotification: PropTypes.func.isRequired,
+};
 
 export default BlogDisplay

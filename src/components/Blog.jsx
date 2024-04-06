@@ -1,6 +1,6 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-/* eslint-disable react/prop-types */
 const Blog = ({ blog, handleLike, nameOfLoggedInUser, handleBlogDelete }) => {
     const [visible, setVisible] = useState(false);
     const showWhenVisible = { display: visible ? '' : 'none' };
@@ -34,6 +34,13 @@ const Blog = ({ blog, handleLike, nameOfLoggedInUser, handleBlogDelete }) => {
             </div>
         </div>
     );
+};
+
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    handleLike: PropTypes.func.isRequired,
+    nameOfLoggedInUser: PropTypes.string.isRequired,
+    handleBlogDelete: PropTypes.func.isRequired
 };
 
 export default Blog;
