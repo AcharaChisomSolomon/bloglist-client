@@ -1,10 +1,16 @@
 import { useState } from "react"
 import blogService from "../services/blogs"
 
-const BlogForm = ({ setBlogs, setNotification }) => { 
+const BlogForm = ({
+    setBlogs,
+    setNotification,
+    blogFormVisible,
+}) => { 
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
+
+    const formDisplayStyle = { display: !blogFormVisible ? 'none' : '' }
 
     const addBlog = async (event) => {
         event.preventDefault()
@@ -24,7 +30,7 @@ const BlogForm = ({ setBlogs, setNotification }) => {
     }
 
     return (
-        <form onSubmit={addBlog}>
+        <form onSubmit={addBlog} style={ formDisplayStyle } >
             <div>
                 title: <input
                     type="text"

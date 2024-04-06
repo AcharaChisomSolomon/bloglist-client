@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Blog from "./Blog"
 import BlogForm from "./BlogForm";
 
@@ -8,6 +9,8 @@ const BlogDisplay = ({
     setBlogs,
     setNotification
 }) => {
+    const [blogFormVisible, setBlogFormVisible] = useState(false);
+
     return (
       <div>        
             <p>
@@ -19,7 +22,11 @@ const BlogDisplay = ({
             <BlogForm
                 setBlogs={setBlogs}
                 setNotification={setNotification}
+                blogFormVisible={blogFormVisible}
             />
+            <button onClick={() => setBlogFormVisible(!blogFormVisible)}>
+                {blogFormVisible ? 'cancel' : 'new blog'}
+            </button>
 
             <div>
             {blogs.map((blog) => (
