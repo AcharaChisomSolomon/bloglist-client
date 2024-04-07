@@ -12,6 +12,23 @@ const BlogDisplay = ({
     setNotification
 }) => {
     const [blogFormVisible, setBlogFormVisible] = useState(false);
+
+    const createBlog = async (blogObject) => {
+        let returnedBlog;
+    
+        returnedBlog = await blogService.create(blogObject);
+        console.log(returnedBlog);
+        
+        setBlogs((prevblogs) => [...prevblogs, returnedBlog]);
+        setNotification({
+            message: `a new blog '${returnedBlog.title}' by '${returnedBlog.author}' added`,
+            status: "success",
+        });
+        setTimeout(() => {
+            setNotification(null);
+        }, 5000);
+        setBlogFormVisible(false);
+    };
     
     const handleLike = async (blog) => {
         const userId = blog.user.id;
@@ -50,7 +67,9 @@ const BlogDisplay = ({
         }
     };
 
-    blogs.sort((a, b) => b.likes - a.likes);
+    if (blogs.length > 0) {
+        blogs.sort((a, b) => b.likes - a.likes);
+    }
 
     return (
         <div>        
@@ -61,17 +80,15 @@ const BlogDisplay = ({
 
             <h2>create new</h2>
             <BlogForm
-                setBlogs={setBlogs}
-                setNotification={setNotification}
+                createBlog={createBlog}
                 blogFormVisible={blogFormVisible}
-                setBlogFormVisible={setBlogFormVisible}
             />
             <button onClick={() => setBlogFormVisible(!blogFormVisible)}>
                 {blogFormVisible ? 'cancel' : 'create new blog'}
             </button>
 
             <div>
-                {blogs.map((blog) => (
+                {blogs.length > 0 && blogs.map((blog) => (
                     <Blog
                         key={blog.id}
                         blog={blog}
