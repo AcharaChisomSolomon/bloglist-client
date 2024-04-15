@@ -20,11 +20,11 @@ const Blog = ({ blog, handleLike, nameOfLoggedInUser, handleBlogDelete }) => {
     );
 };
 
-// Blog.propTypes = {
-//     blog: PropTypes.object.isRequired,
-//     handleLike: PropTypes.func.isRequired,
-//     nameOfLoggedInUser: PropTypes.string.isRequired,
-//     handleBlogDelete: PropTypes.func.isRequired
-// };
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    handleLike: PropTypes.func.isRequired,
+    nameOfLoggedInUser: PropTypes.string.isRequired,
+    handleBlogDelete: PropTypes.func.isRequired
+};
 
 export default Blog;

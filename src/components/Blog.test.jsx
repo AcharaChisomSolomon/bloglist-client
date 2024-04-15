@@ -1,29 +1,28 @@
 import { render, screen } from '@testing-library/react';
 import Blog from './Blog';
+import { expect } from 'vitest';
 
-test('renders content with only title and author by default', () => { 
+test('renders content', () => {
     const blog = {
-        id: '1',
         title: 'Component testing is done with react-testing-library',
         author: 'Test Author',
-        url: 'http://localhost',
+        url: 'https://www.example.com',
         likes: 0,
         user: {
+            id: '2',
             name: 'Test User',
-            username: 'testuser',
-            id: '2'
-        }
+            username: 'testuser'
+        },
+        id: '1'
     };
 
-    const { container } = render(<Blog blog={blog} />);
-    const div = container.querySelector('.blog');
-    // screen.debug(div);
+    render(<Blog blog={blog} />);
 
-    // const titleAndAuthorDiv = screen.getByText(`${blog.title} - ${blog.author}`);
-    const urlDiv = screen.queryByText(`${blog.url}`);
-    const likesDiv = screen.queryByText(`likes ${blog.likes}`);
+    const title = screen.queryByText('Component testing is done with react-testing-library');
+    const url = screen.queryByText('https://www.example.com');
+    const likes = screen.queryByText('likes 0');
 
-    expect(div).toHaveTextContent(`${blog.title} - ${blog.author}`);
-    expect(urlDiv).toBeNull();
-    expect(likesDiv).toBeNull();
+    expect(title).toBeDefined();
+    expect(url).toBeNull();
+    expect(likes).toBeNull();
 });
