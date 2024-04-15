@@ -3,6 +3,9 @@ import Blog from './Blog';
 import { expect } from 'vitest';
 
 test('renders content', () => {
+    const handleLike = vi.fn();
+    const handleBlogDelete = vi.fn();
+
     const blog = {
         title: 'Component testing is done with react-testing-library',
         author: 'Test Author',
@@ -16,7 +19,12 @@ test('renders content', () => {
         id: '1'
     };
 
-    render(<Blog blog={blog} />);
+    render(<Blog
+        blog={blog}
+        handleLike={handleLike}
+        handleBlogDelete={handleBlogDelete}
+        nameOfLoggedInUser='Test User'
+    />);
 
     const title = screen.queryByText('Component testing is done with react-testing-library');
     const url = screen.queryByText('https://www.example.com');
