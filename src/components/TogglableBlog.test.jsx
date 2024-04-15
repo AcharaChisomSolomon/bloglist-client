@@ -17,14 +17,27 @@ describe('<TogglableBlog />', () => {
         id: '1'
     };
     let component;
+    const handleLike = vi.fn(() => () => {
+        blog.likes += 1;
+    });
+    const handleBlogDelete = vi.fn();
+    const nameOfLoggedInUser = 'Test User';
 
     beforeEach(() => {
         component = render(
-            <TogglableBlog blog={blog}>
-                <div className="testDiv">
-                    blog content
-                </div>
-            </TogglableBlog>
+          <TogglableBlog blog={blog}>
+            <div className='testDiv'>
+              <div>{blog.url}</div>
+              <div>
+                likes {blog.likes}
+                <button onClick={handleLike}>like</button>
+              </div>
+              <div>{blog.user.name}</div>
+              {nameOfLoggedInUser === blog.user.name && (
+                <button onClick={handleBlogDelete}>remove</button>
+              )}
+            </div>
+          </TogglableBlog>
         ).container;
     });
 
@@ -44,7 +57,7 @@ describe('<TogglableBlog />', () => {
 
         const div = component.querySelector('.blog');
         const hideButton = screen.queryByText('hide');
-        const testDiv = screen.queryByText('blog content');
+        const testDiv = screen.queryByText(`${blog.url}`);
 
         expect(hideButton).toBeDefined();
         expect(testDiv).toBeDefined();
@@ -64,6 +77,23 @@ describe('<TogglableBlog />', () => {
 
         expect(testDiv).toBeNull();
         expect(viewButtonAfterHide).toBeDefined();
+        expect(div).toHaveTextContent(`${blog.title} - ${blog.author}`);
+    });
+
+    test('the like event handler is called twice when like button is clicked twice', async () => {
+        const viewButton = screen.getByText('view');
+        await userEvent.click(viewButton);
+
+        const likeButton = screen.getByText('like');
+        await userEvent.click(likeButton);
+        await userEvent.click(likeButton);
+
+        const div = component.querySelector('.blog');
+        const likeButtonAfterLike = screen.queryByText('like');
+        const likes = screen.queryByText('likes 2');
+
+        expect(likeButtonAfterLike).toBeDefined();
+        expect(likes).toBeDefined();
         expect(div).toHaveTextContent(`${blog.title} - ${blog.author}`);
     });
 });
