@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import TogglableBlog from './TogglableBlog';
+import { test } from 'vitest';
 
 describe('<TogglableBlog />', () => {
     const blog = {
@@ -47,6 +48,22 @@ describe('<TogglableBlog />', () => {
 
         expect(hideButton).toBeDefined();
         expect(testDiv).toBeDefined();
+        expect(div).toHaveTextContent(`${blog.title} - ${blog.author}`);
+    });
+
+    test('hides blog content when hide button is clicked', async () => { 
+        const viewButton = screen.getByText('view');
+         await userEvent.click(viewButton);
+
+        const hideButton = screen.getByText('hide');
+        await userEvent.click(hideButton);
+
+        const div = component.querySelector('.blog');
+        const testDiv = screen.queryByText('blog content');
+        const viewButtonAfterHide = screen.queryByText('view');
+
+        expect(testDiv).toBeNull();
+        expect(viewButtonAfterHide).toBeDefined();
         expect(div).toHaveTextContent(`${blog.title} - ${blog.author}`);
     });
 });

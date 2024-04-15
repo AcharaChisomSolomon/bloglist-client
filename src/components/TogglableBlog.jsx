@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+ 
 const ToggleableBlog = ({ children, blog }) => {
     const [visible, setVisible] = useState(false);
 
@@ -31,9 +31,7 @@ const ToggleableBlog = ({ children, blog }) => {
       <div style={blogStyle} className="blog">
         <div>
           {blog.title} - {blog.author}
-          <button onClick={toggleVisibility}>
-            hide
-          </button>
+          <button onClick={toggleVisibility}>hide</button>
         </div>
         {children}
       </div>
