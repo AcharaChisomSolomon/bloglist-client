@@ -13,6 +13,8 @@ const App = () => {
     const [user, setUser] = useState(null)
     const [notification, setNotification] = useState(null)
 
+    console.log(blogs)
+
 
     useEffect(() => {
         if (!user) return
